@@ -3,27 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" side="LEFT" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
-    <Tab fx:id="dbT" text="Db">
-        <SplitPane dividerPositions="0.3076923076923077" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-        </SplitPane>
-    </Tab>
-    <Tab fx:id="schemasT" text="Schemas">
-    </Tab>
-    <Tab fx:id="tablesParentT" text="Tables">
-        <SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
-            <TabPane fx:id="tablesTP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
-                <Tab fx:id="tablesT" text="Tables">
-                </Tab>
-                <Tab fx:id="columnsT" text="Columns">
-                </Tab>
-                <Tab fx:id="connectionsT" text="Connections">
-                </Tab>
-            </TabPane>
-        </SplitPane>
-    </Tab>
-    <Tab fx:id="queriesT" text="Queries">
-    </Tab>
-    <Tab fx:id="commitsT" text="Commits">
-    </Tab>
-</TabPane>
+
+<SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
+   <items>
+      <Pane fx:id="upPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+      <Pane fx:id="downPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+   </items>
+</SplitPane>
