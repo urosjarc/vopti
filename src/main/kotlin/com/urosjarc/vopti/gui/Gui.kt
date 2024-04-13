@@ -14,7 +14,7 @@ class Gui : Application() {
         val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
         val jMetro = JMetro(Style.DARK)
         stage.scene = scene
-//        jMetro.scene = scene
+        jMetro.scene = scene
         stage.show()
     }
 

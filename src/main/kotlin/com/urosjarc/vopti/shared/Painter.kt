@@ -11,9 +11,9 @@ import kotlin.math.min
 
 class Painter() {
     private lateinit var pane: Pane
-    val mouseVector = Vector()
-    val staticShapes = mutableListOf<Shape>()
-    val shapes = mutableListOf<Shape>()
+    private val mouseVector = Vector()
+    private val staticShapes = mutableListOf<Shape>()
+    private val shapes = mutableListOf<Shape>()
 
     fun init(pane: Pane) {
         this.pane = pane
@@ -45,7 +45,7 @@ class Painter() {
     fun addCircle(
         x: Double,
         y: Double,
-        radius: Double = 0.05,
+        size: Double = 0.05,
         lineWidth: Double = 0.01,
         fill: Color = Color.BLACK,
         stroke: Color = Color.BLACK
@@ -53,7 +53,7 @@ class Painter() {
         val shape = Circle()
         shape.centerX = x
         shape.centerY = y
-        shape.radius = radius
+        shape.radius = size / 2
         shape.fill = fill
         shape.stroke = stroke
         shape.strokeWidth = lineWidth
@@ -108,9 +108,9 @@ class Painter() {
     ) = this.addLine(start = start, end = end, width = width, color = color, strokeDashArray = arrayOf())
 
     fun redraw() {
+        val minDim = min(this.pane.height, this.pane.width)
         this.pane.children.clear()
         (this.shapes + this.staticShapes).forEach {
-            val minDim = min(this.pane.height, this.pane.width)
             when (it) {
                 is Circle -> {
                     val shape = Circle()
@@ -150,5 +150,10 @@ class Painter() {
                 else -> throw Error("Unknown shape to draw!")
             }
         }
+    }
+
+    fun clear() {
+        this.shapes.clear()
+        this.redraw()
     }
 }

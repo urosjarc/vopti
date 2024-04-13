@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<SplitPane dividerPositions="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
-   <items>
-      <Pane fx:id="upPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-      <Pane fx:id="downPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-   </items>
-</SplitPane>
+<TabPane prefHeight="700.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
+    <Tab text="Drawings">
+        <SplitPane dividerPositions="0.465564738292011" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <Pane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="400.0" minWidth="400.0">
+                <GridPane alignment="CENTER_RIGHT" hgap="8.0" maxWidth="1.7976931348623157E308" vgap="16.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="115.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="262.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Seed" />
+                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Locations size" GridPane.rowIndex="1" />
+                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Depots size" GridPane.rowIndex="2" />
+                    <Slider fx:id="seedS" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" maxWidth="1.7976931348623157E308" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                    <Slider fx:id="locationsSizeS" blockIncrement="1000.0" majorTickUnit="500.0" max="2000.0" maxWidth="1.7976931348623157E308" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    <Slider fx:id="depotsSizeS" blockIncrement="1.0" majorTickUnit="5.0" max="20.0" maxWidth="1.7976931348623157E308" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Max distance" GridPane.rowIndex="3" />
+                    <Slider fx:id="distanceMaxS" blockIncrement="1.0" majorTickUnit="5.0" max="20.0" maxWidth="1.7976931348623157E308" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="4.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Play" GridPane.rowIndex="4" />
+                    <Slider fx:id="playS" blockIncrement="50.0" majorTickUnit="250.0" max="1000.0" maxWidth="1.7976931348623157E308" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+               <VBox.margin>
+                  <Insets bottom="8.0" right="16.0" top="8.0" />
+               </VBox.margin>
+                </GridPane>
+                <Button fx:id="createLocationsB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Create locations" />
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="NEVER">
+                    <Button fx:id="nextB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Next" HBox.hgrow="ALWAYS" />
+                    <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS" />
+                    <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
+                </HBox>
+            </VBox>
+        </SplitPane>
+    </Tab>
+</TabPane>
