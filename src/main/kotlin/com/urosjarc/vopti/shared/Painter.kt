@@ -1,5 +1,7 @@
 package com.urosjarc.vopti.shared
 
+import com.urosjarc.vopti.algo.TestFunction
+import javafx.scene.image.ImageView
 import javafx.scene.input.ScrollEvent
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
@@ -9,11 +11,13 @@ import javafx.scene.shape.Rectangle
 import javafx.scene.shape.Shape
 import kotlin.math.min
 
+
 class Painter() {
     private lateinit var pane: Pane
     private val mouseVector = Vector()
     private val staticShapes = mutableListOf<Shape>()
     private val shapes = mutableListOf<Shape>()
+    private val background = ImageView()
 
     fun init(pane: Pane) {
         this.pane = pane
@@ -77,6 +81,15 @@ class Painter() {
     fun addSquare(x: Double, y: Double, size: Double = 0.05, color: Color = Color.BLACK): Rectangle =
         this.addRectangle(x = x, y = y, size = size, lineWidth = 0.0, fill = color, stroke = Color.TRANSPARENT)
 
+    fun setBackground(function: TestFunction) {
+        this.background.image = function.image()
+        val minDim = min(this.pane.height, this.pane.width)
+        this.background.minWidth(minDim)
+        this.background.minHeight(minDim)
+        this.background.maxWidth(minDim)
+        this.background.maxHeight(minDim)
+    }
+
     fun addSquareBox(x: Double, y: Double, size: Double = 0.05, color: Color = Color.BLACK): Rectangle =
         this.addRectangle(x = x, y = y, size = size, lineWidth = 1.0, fill = Color.TRANSPARENT, stroke = color)
 
@@ -110,6 +123,13 @@ class Painter() {
     fun redraw() {
         val minDim = min(this.pane.height, this.pane.width)
         this.pane.children.clear()
+
+        /** BACKGROUND */
+        this.background.fitWidth = minDim
+        this.background.fitHeight = minDim
+        this.pane.children.add(this.background)
+
+        /** DYNAMIC AND STATIC SHAPES */
         (this.shapes + this.staticShapes).forEach {
             when (it) {
                 is Circle -> {

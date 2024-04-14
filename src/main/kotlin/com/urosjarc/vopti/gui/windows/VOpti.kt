@@ -2,13 +2,13 @@ package com.urosjarc.vopti.gui.windows
 
 import com.urosjarc.vopti.algo.ClarkAndWright
 import com.urosjarc.vopti.algo.Location
+import com.urosjarc.vopti.algo.TestFunction
 import com.urosjarc.vopti.shared.Painter
 import com.urosjarc.vopti.shared.Vector
 import com.urosjarc.vopti.shared.startThread
 import javafx.application.Platform
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.Slider
+import javafx.scene.control.*
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import org.koin.core.component.KoinComponent
@@ -30,7 +30,7 @@ abstract class VOptiUI : KoinComponent {
     lateinit var createLocationsB: Button
 
     @FXML
-    lateinit var locationsSizeS: Slider
+    lateinit var locationsSizeS: Spinner<Int>
 
     @FXML
     lateinit var seedS: Slider
@@ -46,6 +46,12 @@ abstract class VOptiUI : KoinComponent {
 
     @FXML
     lateinit var playS: Slider
+
+    @FXML
+    lateinit var locationsSpreadCB: ChoiceBox<Any>
+
+    @FXML
+    lateinit var mapCB: ChoiceBox<Any>
 }
 
 class VOpti : VOptiUI() {
@@ -64,6 +70,8 @@ class VOpti : VOptiUI() {
 
     @FXML
     fun initialize() {
+        this.locationsSizeS.valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 250, 10)
+
         this.playS.setOnMouseReleased { this.play() }
         this.createLocationsB.setOnAction { this.createLocations() }
         this.nextB.setOnAction { this.next() }
@@ -75,7 +83,7 @@ class VOpti : VOptiUI() {
     private fun play() {
         this.playThread?.interrupt()
         this.playThread = startThread(sleep = 0, interval = this.playS.value.toLong(), repeat = true) {
-            Platform.runLater { if(!this.next()) this.playThread!!.interrupt() }
+            Platform.runLater { if (!this.next()) this.playThread!!.interrupt() }
         }
     }
 
@@ -86,6 +94,8 @@ class VOpti : VOptiUI() {
         this.customers.clear()
         this.depots.clear()
         this.painter.clear()
+        this.painter.setBackground(TestFunction.SixHumpCamel)
+        this.painter.redraw()
     }
 
     private fun createLocations() {
@@ -119,7 +129,7 @@ class VOpti : VOptiUI() {
         var count = 0
         while (!this.clarkAndWright!!.next()) {
             count++
-            if(count > 1000) return false
+            if (count > 1000) return false
         }
         this.drawRoutes()
         return true
