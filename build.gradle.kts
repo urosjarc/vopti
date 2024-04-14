@@ -1,7 +1,7 @@
 plugins {
     java
     application
-    kotlin("jvm") version "1.8.22"
+    kotlin("jvm") version "1.9.22"
     id("org.openjfx.javafxplugin") version "0.0.13"
     id("org.beryx.jlink") version "3.0.1"
 }

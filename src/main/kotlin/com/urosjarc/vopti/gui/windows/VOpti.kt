@@ -48,10 +48,16 @@ abstract class VOptiUI : KoinComponent {
     lateinit var playS: Slider
 
     @FXML
-    lateinit var locationsSpreadCB: ChoiceBox<Any>
+    lateinit var locationsDistributionCB: ChoiceBox<TestFunction>
 
     @FXML
-    lateinit var mapCB: ChoiceBox<Any>
+    lateinit var mapCB: ChoiceBox<TestFunction>
+
+    @FXML
+    lateinit var resolutionS: Slider
+
+    @FXML
+    lateinit var groupingS: Slider
 }
 
 class VOpti : VOptiUI() {
@@ -70,8 +76,12 @@ class VOpti : VOptiUI() {
 
     @FXML
     fun initialize() {
+        this.mapCB.items.setAll(TestFunction.all)
+        this.mapCB.value = TestFunction.all.first()
+        this.locationsDistributionCB.items.setAll(TestFunction.all)
+        this.locationsDistributionCB.value = TestFunction.all.first()
         this.locationsSizeS.valueFactory = SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 250, 10)
-
+        this.mapCB.setOnAction { this.clear() }
         this.playS.setOnMouseReleased { this.play() }
         this.createLocationsB.setOnAction { this.createLocations() }
         this.nextB.setOnAction { this.next() }
@@ -94,24 +104,15 @@ class VOpti : VOptiUI() {
         this.customers.clear()
         this.depots.clear()
         this.painter.clear()
-        this.painter.setBackground(TestFunction.SixHumpCamel)
+        this.painter.setBackground(this.mapCB.value.image(resolution = this.resolutionS.value.toInt()))
         this.painter.redraw()
     }
 
     private fun createLocations() {
         this.clear()
+        val seed = this.seedS.value.toInt()
 
-        val rand = Random(this.seedS.value.toInt())
-
-        repeat(this.locationsSizeS.value.toInt()) {
-            val x = rand.nextDouble()
-            val y = rand.nextDouble()
-            val height = rand.nextDouble()
-            val location = Location(x = x, y = y, height = height)
-            this.customers.add(location)
-            this.painter.addCircle(x = x, y = y, size = 0.005, fill = Color.GRAY)
-        }
-
+        var rand = Random(seed)
         repeat(this.depotsSizeS.value.toInt()) {
             val x = rand.nextDouble()
             val y = rand.nextDouble()
@@ -119,6 +120,21 @@ class VOpti : VOptiUI() {
             val location = Location(x = x, y = y, height = height)
             this.depots.add(location)
             this.painter.addSquare(x = x, y = y, size = 0.01, color = Color.RED)
+        }
+
+        rand = Random(seed + 1)
+        val matrix = this.locationsDistributionCB.value.matrix(resolution = 10)
+        repeat(this.locationsSizeS.value.toInt()) {
+            while (true) {
+                val x = rand.nextDouble()
+                val y = rand.nextDouble()
+                val probability = matrix[(y * 10).toInt()][(x * 10).toInt()]
+                if (rand.nextDouble() + this.groupingS.value > probability) continue
+                val location = Location(x = x, y = y, height = this.mapCB.value.value(x = x, y = y))
+                this.customers.add(location)
+                this.painter.addCircle(x = x, y = y, size = 0.005, fill = Color.YELLOW)
+                break
+            }
         }
 
         this.painter.redraw()

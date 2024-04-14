@@ -1,6 +1,6 @@
 package com.urosjarc.vopti.shared
 
-import com.urosjarc.vopti.algo.TestFunction
+import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.ScrollEvent
 import javafx.scene.layout.Pane
@@ -81,8 +81,8 @@ class Painter() {
     fun addSquare(x: Double, y: Double, size: Double = 0.05, color: Color = Color.BLACK): Rectangle =
         this.addRectangle(x = x, y = y, size = size, lineWidth = 0.0, fill = color, stroke = Color.TRANSPARENT)
 
-    fun setBackground(function: TestFunction) {
-        this.background.image = function.image()
+    fun setBackground(image: Image) {
+        this.background.image = image
         val minDim = min(this.pane.height, this.pane.width)
         this.background.minWidth(minDim)
         this.background.minHeight(minDim)
