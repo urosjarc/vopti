@@ -14,7 +14,7 @@ repositories {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(19)
 }
 
 application {
@@ -35,6 +35,9 @@ jlink {
 }
 
 dependencies {
+    // Kotlinx
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.5.0")
+
     //Dark
     implementation("org.jfxtras:jmetro:11.6.14")
 

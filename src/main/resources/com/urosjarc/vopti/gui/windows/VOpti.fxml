@@ -54,35 +54,7 @@
                     <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS" />
                     <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
                 </HBox>
-            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn prefWidth="75.0" text="Map">
-                  <columns>
-                      <TableColumn prefWidth="75.0" text="Seed" />
-                      <TableColumn prefWidth="75.0" text="Height" />
-                  </columns>
-                </TableColumn>
-                <TableColumn prefWidth="75.0" text="Location">
-                     <columns>
-                        <TableColumn prefWidth="75.0" text="Distribution" />
-                        <TableColumn prefWidth="75.0" text="Grouping" />
-                        <TableColumn prefWidth="75.0" text="Size" />
-                     </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="75.0" text="Depots">
-                      <columns>
-                          <TableColumn prefWidth="75.0" text="Size" />
-                      </columns>
-                  </TableColumn>
-                  <TableColumn prefWidth="75.0" text="Vehicles">
-                      <columns>
-                          <TableColumn prefWidth="75.0" text="Max distance" />
-                      </columns>
-                  </TableColumn>
-
-
-              </columns>
-            </TableView>
+<!--                <fx:include fx:id="problemsTV_" source="../widgets/ProblemsTableView.fxml"/>-->
             </VBox>
         </SplitPane>
     </Tab>

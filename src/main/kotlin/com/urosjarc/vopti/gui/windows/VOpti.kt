@@ -3,6 +3,8 @@ package com.urosjarc.vopti.gui.windows
 import com.urosjarc.vopti.algo.ClarkAndWright
 import com.urosjarc.vopti.algo.Location
 import com.urosjarc.vopti.algo.TestFunction
+import com.urosjarc.vopti.app.problem.ProblemRepo
+import com.urosjarc.vopti.gui.widgets.ProblemsTableView
 import com.urosjarc.vopti.shared.Painter
 import com.urosjarc.vopti.shared.Vector
 import com.urosjarc.vopti.shared.startThread
@@ -12,6 +14,7 @@ import javafx.scene.control.*
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.random.Random
 
 
@@ -58,6 +61,9 @@ abstract class VOptiUI : KoinComponent {
 
     @FXML
     lateinit var groupingS: Slider
+
+    @FXML
+    lateinit var problemsTV_Controller: ProblemsTableView
 }
 
 class VOpti : VOptiUI() {

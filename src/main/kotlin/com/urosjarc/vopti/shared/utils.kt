@@ -1,6 +1,7 @@
 package com.urosjarc.vopti.shared
 
 import javafx.concurrent.Task
+import javafx.scene.control.TableColumn
 
 fun startThread(sleep: Long = 0, interval: Long = 0, repeat: Boolean = false, workCb: () -> Unit): Thread {
 
@@ -26,4 +27,7 @@ fun startThread(sleep: Long = 0, interval: Long = 0, repeat: Boolean = false, wo
         it.isDaemon = true
         it.start()
     }
+}
+fun setColumnWidth(column: TableColumn<*, *>, percent: Int) {
+    column.maxWidth = Integer.MAX_VALUE * percent.toDouble()
 }
