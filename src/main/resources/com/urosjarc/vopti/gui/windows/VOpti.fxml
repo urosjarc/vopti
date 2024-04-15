@@ -4,15 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane prefHeight="700.0" prefWidth="726.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
+<TabPane prefHeight="700.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.windows.VOpti">
     <Tab text="Drawings">
         <SplitPane dividerPositions="0.465564738292011" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <Pane fx:id="main" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="600.0" minWidth="600.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="600.0">
                 <GridPane alignment="CENTER_RIGHT" hgap="8.0" maxWidth="1.7976931348623157E308" vgap="16.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="88.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="488.0" minWidth="10.0" prefWidth="476.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -54,6 +54,35 @@
                     <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS" />
                     <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
                 </HBox>
+            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Map">
+                  <columns>
+                      <TableColumn prefWidth="75.0" text="Seed" />
+                      <TableColumn prefWidth="75.0" text="Height" />
+                  </columns>
+                </TableColumn>
+                <TableColumn prefWidth="75.0" text="Location">
+                     <columns>
+                        <TableColumn prefWidth="75.0" text="Distribution" />
+                        <TableColumn prefWidth="75.0" text="Grouping" />
+                        <TableColumn prefWidth="75.0" text="Size" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn prefWidth="75.0" text="Depots">
+                      <columns>
+                          <TableColumn prefWidth="75.0" text="Size" />
+                      </columns>
+                  </TableColumn>
+                  <TableColumn prefWidth="75.0" text="Vehicles">
+                      <columns>
+                          <TableColumn prefWidth="75.0" text="Max distance" />
+                      </columns>
+                  </TableColumn>
+
+
+              </columns>
+            </TableView>
             </VBox>
         </SplitPane>
     </Tab>
