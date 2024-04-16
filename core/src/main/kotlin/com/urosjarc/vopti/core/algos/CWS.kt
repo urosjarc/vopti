@@ -7,7 +7,7 @@ import com.urosjarc.vopti.core.domain.Route
 /**
  * Clark and Wright savings algorithm.
  */
-abstract class CWS(depot: Location, customers: List<Location>) {
+abstract class CWS(val depot: Location, val customers: List<Location>) {
     abstract fun calculateCost(loc0: Location, loc1: Location): Double
     abstract fun isRouteValid(route: List<Int>): Boolean
 
@@ -23,7 +23,7 @@ abstract class CWS(depot: Location, customers: List<Location>) {
     val routes = mutableMapOf<Id<Route>, Route>()
     val location_route = mutableMapOf<Int, Route>()
 
-    init {
+    fun init() {
         this.initCosts()
         this.initSavings()
         this.savings.sortByDescending { it.third }
