@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<SplitPane dividerPositions="0.8" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="669.0" prefWidth="818.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.widgets.CWS">
+     <Pane fx:id="painterP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+     <VBox maxWidth="800.0" minWidth="500.0">
+         <fx:include fx:id="CWSProblem_" source="../widgets/CWSProblem.fxml" />
+         <HBox fillHeight="false" maxWidth="1.7976931348623157E308">
+             <Button fx:id="nextB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Next" HBox.hgrow="ALWAYS" />
+             <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS" />
+             <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
+         </HBox>
+     </VBox>
+ </SplitPane>
