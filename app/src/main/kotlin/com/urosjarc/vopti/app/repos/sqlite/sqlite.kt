@@ -8,7 +8,7 @@ import com.urosjarc.dbmessiah.serializers.BasicTS
 import com.urosjarc.dbmessiah.serializers.IdTS
 import com.urosjarc.dbmessiah.serializers.JavaTimeTS
 import com.urosjarc.vopti.core.domain.Id
-import com.urosjarc.vopti.core.domain.Problem
+import com.urosjarc.vopti.core.domain.CWSProblem
 import java.util.*
 import kotlin.reflect.KProperty1
 
@@ -22,7 +22,7 @@ private fun <T : Any> createTable(primaryKey: KProperty1<T, *>): Table<T> {
 
 private val sqlite_serializer = SqliteSerializer(
     tables = listOf(
-        createTable(Problem::id)
+        createTable(CWSProblem::id)
     ),
     globalSerializers = BasicTS.basic + JavaTimeTS.sqlite + IdTS.uuid.sqlite { Id<Any>(it) }
 )

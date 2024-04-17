@@ -1,6 +1,6 @@
 package com.urosjarc.vopti.gui.parts
 
-import com.urosjarc.vopti.core.domain.Problem
+import com.urosjarc.vopti.core.domain.CWSProblem
 import com.urosjarc.vopti.core.repos.ProblemRepo
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -14,31 +14,31 @@ import org.koin.core.component.inject
 open class ProblemsTableViewUi : KoinComponent {
 
     @FXML
-    lateinit var problemsTV: TableView<Problem>
+    lateinit var problemsTV: TableView<CWSProblem>
 
     @FXML
-    lateinit var mapHeightTC: TableColumn<Problem, String>
+    lateinit var mapHeightTC: TableColumn<CWSProblem, String>
 
     @FXML
-    lateinit var customersSizeTC: TableColumn<Problem, Int>
+    lateinit var customersSizeTC: TableColumn<CWSProblem, Int>
 
     @FXML
-    lateinit var customersGroupingTC: TableColumn<Problem, Double>
+    lateinit var customersGroupingTC: TableColumn<CWSProblem, Double>
 
     @FXML
-    lateinit var customersDistributionTC: TableColumn<Problem, String>
+    lateinit var customersDistributionTC: TableColumn<CWSProblem, String>
 
     @FXML
-    lateinit var customersSeedTC: TableColumn<Problem, Int>
+    lateinit var customersSeedTC: TableColumn<CWSProblem, Int>
 
     @FXML
-    lateinit var depotsSizeTC: TableColumn<Problem, Int>
+    lateinit var depotsSizeTC: TableColumn<CWSProblem, Int>
 
     @FXML
-    lateinit var depotsSeedTC: TableColumn<Problem, Int>
+    lateinit var depotsSeedTC: TableColumn<CWSProblem, Int>
 
     @FXML
-    lateinit var vehiclesMaxDistanceTC: TableColumn<Problem, Double>
+    lateinit var vehiclesMaxDistanceTC: TableColumn<CWSProblem, Double>
 }
 
 class ProblemsTableView : ProblemsTableViewUi() {
@@ -63,7 +63,7 @@ class ProblemsTableView : ProblemsTableViewUi() {
         this.depotsSeedTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.depotsSeed) }
 
         //Vehicles
-        this.vehiclesMaxDistanceTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.vehicleMaxDistance) }
+        this.vehiclesMaxDistanceTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.vehicleRange) }
     }
 
 }

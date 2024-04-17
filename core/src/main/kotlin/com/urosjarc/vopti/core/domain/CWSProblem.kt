@@ -2,11 +2,12 @@ package com.urosjarc.vopti.core.domain
 
 import java.time.Instant
 
-data class Problem(
-    override val id: Id<Problem> = Id(),
+data class CWSProblem(
+    override val id: Id<CWSProblem> = Id(),
 
     /** Map */
     val mapHeight: String,
+    val mapResolution: Int,
 
     /** Customers */
     val customersSeed: Int,
@@ -19,7 +20,10 @@ data class Problem(
     val depotsSeed: Int,
 
     /** Vehicles */
-    val vehicleMaxDistance: Double,
+    val vehicleRange: Double,
 
     val created: Instant = Instant.now()
-) : Entity<Problem>()
+) : Entity<CWSProblem>() {
+    val mapHeightFun = TestFunction.all.first { it.name == this.mapHeight }
+    val customersDistributionFun = TestFunction.all.first { it.name == this.customersDistribution }
+}

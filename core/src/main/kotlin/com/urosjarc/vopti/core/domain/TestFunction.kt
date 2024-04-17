@@ -5,7 +5,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-class TestFunction(private val name: String, val z: (x: Double, y: Double) -> Double) {
+class TestFunction(val name: String, val z: (x: Double, y: Double) -> Double) {
     companion object {
         val all = listOf(
             TestFunction(name = "Sphere", z = { x, y -> x.pow(2) + y.pow(2) }),
