@@ -100,5 +100,5 @@
             <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Play interval" />
         </GridPane>
     </TitledPane>
-   <Button fx:id="createB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Create" />
+   <Button fx:id="createB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Create problem" />
 </VBox>
