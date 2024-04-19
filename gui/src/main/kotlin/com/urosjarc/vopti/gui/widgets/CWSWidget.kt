@@ -97,7 +97,7 @@ class CWSWidget : CWSWidgetUI() {
                 resolution = problem.mapResolution
             )
             problem.depots.forEach { loc -> this.painter.addSquare(x = loc.x, y = loc.y, color = Color.RED, size = 0.005) }
-            problem.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.GREEN, size = 0.005) }
+            problem.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.MAGENTA, size = 0.005) }
         }
         this.painter.redraw()
     }
