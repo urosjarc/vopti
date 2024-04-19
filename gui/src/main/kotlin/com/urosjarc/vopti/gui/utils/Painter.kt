@@ -19,7 +19,7 @@ import javax.imageio.ImageIO
 import kotlin.math.min
 
 
-class Painter() {
+class Painter {
     private lateinit var pane: Pane
     private var mouseX = 0.0
     private var mouseY = 0.0

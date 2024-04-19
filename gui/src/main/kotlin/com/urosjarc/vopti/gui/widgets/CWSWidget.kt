@@ -4,6 +4,7 @@ import com.urosjarc.vopti.app.algos.EuclidianCWS
 import com.urosjarc.vopti.core.algos.CWS
 import com.urosjarc.vopti.core.domain.CWSProblem
 import com.urosjarc.vopti.core.domain.Location
+import com.urosjarc.vopti.core.domain.Vector
 import com.urosjarc.vopti.gui.utils.Painter
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -31,8 +32,6 @@ abstract class CWSWidgetUI : KoinComponent {
     @FXML
     lateinit var solveB: Button
 
-    @FXML
-    lateinit var createB: Button
 }
 
 class CWSWidget : CWSWidgetUI() {
@@ -64,7 +63,18 @@ class CWSWidget : CWSWidgetUI() {
 
         this.cws?.let {
             this.painter.addSquare(x = it.depot.x, y = it.depot.y, color = Color.RED, size = 0.005)
-            it.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.GRAY, size = 0.005) }
+            it.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.GREEN, size = 0.005) }
+            it.routes.values.forEach { route ->
+                this.painter.addSquareBox()
+                for (i in 0 until route.vertices.size - 1) {
+                    val curr = route.vertices[i] - 1
+                    val next = route.vertices[i + 1] - 1
+                    this.painter.addSolidLine(
+                        start = Vector(x = it.customers[curr].x, y = it.customers[curr].y),
+                        end = Vector(x = it.customers[next].x, y = it.customers[next].y),
+                    )
+                }
+            }
         }
 
         this.painter.redraw()
@@ -110,10 +120,10 @@ class CWSWidget : CWSWidgetUI() {
             depot = depots.first(),
             customers = customers
         )
+        this.cws!!.init()
 
         this.redraw()
 
-        this.cws!!.init()
 
     }
 
