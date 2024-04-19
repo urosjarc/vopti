@@ -8,7 +8,7 @@ import com.urosjarc.dbmessiah.serializers.BasicTS
 import com.urosjarc.dbmessiah.serializers.IdTS
 import com.urosjarc.dbmessiah.serializers.JavaTimeTS
 import com.urosjarc.vopti.core.domain.Id
-import com.urosjarc.vopti.core.domain.CWSProblem
+import com.urosjarc.vopti.core.algos.cws.CWSProblem
 import java.util.*
 import kotlin.reflect.KProperty1
 

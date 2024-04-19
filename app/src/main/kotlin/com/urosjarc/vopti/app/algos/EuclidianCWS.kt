@@ -1,6 +1,6 @@
 package com.urosjarc.vopti.app.algos
 
-import com.urosjarc.vopti.core.algos.CWS
+import com.urosjarc.vopti.core.algos.cws.CWS
 import com.urosjarc.vopti.core.domain.Location
 
 /**

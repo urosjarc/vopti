@@ -1,9 +1,12 @@
 package com.urosjarc.vopti.gui.widgets
 
 import com.urosjarc.vopti.app.algos.EuclidianCWS
-import com.urosjarc.vopti.core.algos.CWS
-import com.urosjarc.vopti.core.domain.CWSProblem
+import com.urosjarc.vopti.core.algos.cws.CWS
+import com.urosjarc.vopti.core.algos.cws.CWSProblemData
 import com.urosjarc.vopti.core.domain.Vector
+import com.urosjarc.vopti.core.repos.CWSProblemRepo
+import com.urosjarc.vopti.gui.Events
+import com.urosjarc.vopti.gui.parts.CWSProblemsTableView
 import com.urosjarc.vopti.gui.utils.Job
 import com.urosjarc.vopti.gui.utils.Painter
 import javafx.application.Platform
@@ -13,6 +16,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
 abstract class CWSWidgetUI : KoinComponent {
@@ -24,6 +28,9 @@ abstract class CWSWidgetUI : KoinComponent {
     lateinit var CWSProblem_Controller: CWSProblemWidget
 
     @FXML
+    lateinit var CWSProblemsTV_Controller: CWSProblemsTableView
+
+    @FXML
     lateinit var nextB: Button
 
     @FXML
@@ -32,42 +39,43 @@ abstract class CWSWidgetUI : KoinComponent {
     @FXML
     lateinit var solveB: Button
 
+    @FXML
+    lateinit var saveB: Button
+
 }
 
 class CWSWidget : CWSWidgetUI() {
     private val log = this.logger()
 
     private var cws: CWS? = null
-    private var problem: CWSProblem? = null
-
+    private var cwsProblemData: CWSProblemData? = null
     private val painter = Painter()
-
     private var job: Thread? = null
+    private val cwsProblemRepo: CWSProblemRepo by this.inject()
 
     @FXML
     fun initialize() {
         this.painter.init(pane = this.painterP)
 
-        this.CWSProblem_Controller.problemCreated.listen {
+        Events.cwsProblemCreated.listen {
             this.cws = null
-            this.problem = it
+            this.cwsProblemData = CWSProblemData(problem = it)
             this.redraw()
         }
         this.log.info(this)
         this.nextB.setOnAction { this.next() }
         this.solveB.setOnAction { this.solve() }
         this.playB.setOnAction { this.play() }
+        this.saveB.setOnAction { this.save() }
 
 
         this.CWSProblem_Controller.create()
     }
 
     private fun initCWS() {
-        this.problem?.let { problem ->
+        this.cwsProblemData?.let { data ->
             this.cws = EuclidianCWS(
-                maxDistance = problem.vehicleRange,
-                depot = problem.depots.first(),
-                customers = problem.customers
+                maxDistance = data.problem.vehicleRange, depot = data.depots.first(), customers = data.customers
             )
 
             this.cws!!.init()
@@ -91,17 +99,15 @@ class CWSWidget : CWSWidgetUI() {
                 }
             }
         }
-        this.problem?.let { problem ->
+        this.cwsProblemData?.let { data ->
             this.painter.heightMap(
-                testFunction = problem.mapHeightFun,
-                resolution = problem.mapResolution
+                testFunction = data.mapHeightFun, resolution = data.problem.mapResolution
             )
-            problem.depots.forEach { loc -> this.painter.addSquare(x = loc.x, y = loc.y, color = Color.RED, size = 0.005) }
-            problem.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.MAGENTA, size = 0.005) }
+            data.depots.forEach { loc -> this.painter.addSquare(x = loc.x, y = loc.y, color = Color.RED, size = 0.005) }
+            data.customers.forEach { loc -> this.painter.addCircle(x = loc.x, y = loc.y, fill = Color.MAGENTA, size = 0.005) }
         }
         this.painter.redraw()
     }
-
 
     fun next(): Boolean {
         this.cws ?: this.initCWS()
@@ -132,4 +138,10 @@ class CWSWidget : CWSWidgetUI() {
         }
     }
 
+    private fun save() {
+        this.cwsProblemData?.let {
+            this.cwsProblemRepo.save(data = it.problem)
+            Events.cwsProblemSaved.trigger(it.problem)
+        }
+    }
 }

@@ -1,7 +1,9 @@
 package com.urosjarc.vopti.gui.parts
 
-import com.urosjarc.vopti.core.domain.CWSProblem
-import com.urosjarc.vopti.core.repos.ProblemRepo
+import com.urosjarc.vopti.core.algos.cws.CWSProblem
+import com.urosjarc.vopti.core.repos.CWSProblemRepo
+import com.urosjarc.vopti.gui.Events
+import com.urosjarc.vopti.gui.utils.UI
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.fxml.FXML
@@ -11,10 +13,10 @@ import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-open class ProblemsTableViewUi : KoinComponent {
+open class CWSProblemsTableViewUi : KoinComponent {
 
     @FXML
-    lateinit var problemsTV: TableView<CWSProblem>
+    lateinit var self: TableView<CWSProblem>
 
     @FXML
     lateinit var mapHeightTC: TableColumn<CWSProblem, String>
@@ -39,11 +41,23 @@ open class ProblemsTableViewUi : KoinComponent {
 
     @FXML
     lateinit var vehiclesMaxDistanceTC: TableColumn<CWSProblem, Double>
+
+    @FXML
+    lateinit var vehicleTC: TableColumn<Any, Any>
+
+    @FXML
+    lateinit var depotsTC: TableColumn<Any, Any>
+
+    @FXML
+    lateinit var clientsTC: TableColumn<Any, Any>
+
+    @FXML
+    lateinit var mapTC: TableColumn<Any, Any>
 }
 
-class ProblemsTableView : ProblemsTableViewUi() {
+class CWSProblemsTableView : CWSProblemsTableViewUi() {
     val log = this.logger()
-    val problemRepo: ProblemRepo by this.inject()
+    val problemRepo: CWSProblemRepo by this.inject()
 
     @FXML
     fun initialize() {
@@ -64,6 +78,17 @@ class ProblemsTableView : ProblemsTableViewUi() {
 
         //Vehicles
         this.vehiclesMaxDistanceTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.vehicleRange) }
+
+        // Columns auto size
+        this.self.columnResizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
+        UI.setColumnWidth(vehicleTC, 100 / 4)
+        UI.setColumnWidth(depotsTC, 100 / 4)
+        UI.setColumnWidth(clientsTC, 100 / 4)
+        UI.setColumnWidth(mapTC, 100 / 4)
+
+        Events.cwsProblemSaved.listen {
+            this.self.items.setAll(this.problemRepo.getAll())
+        }
     }
 
 }

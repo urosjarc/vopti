@@ -1,8 +1,8 @@
 package com.urosjarc.vopti.gui.widgets
 
-import com.urosjarc.vopti.core.domain.CWSProblem
+import com.urosjarc.vopti.core.algos.cws.CWSProblem
 import com.urosjarc.vopti.core.domain.TestFunction
-import com.urosjarc.vopti.gui.utils.Event
+import com.urosjarc.vopti.gui.Events
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import org.apache.logging.log4j.kotlin.logger
@@ -67,7 +67,6 @@ abstract class CWSProblemWidgetUI : KoinComponent {
 
 class CWSProblemWidget : CWSProblemWidgetUI() {
     private val log = this.logger()
-    val problemCreated = Event<CWSProblem>()
 
     @FXML
     fun initialize() {
@@ -96,6 +95,6 @@ class CWSProblemWidget : CWSProblemWidgetUI() {
             depotsSeed = this.depotsSeedS.value.toInt(),
             vehicleRange = this.vehiclesRangeS.value
         )
-        this.problemCreated.trigger(problem)
+        Events.cwsProblemCreated.trigger(problem)
     }
 }

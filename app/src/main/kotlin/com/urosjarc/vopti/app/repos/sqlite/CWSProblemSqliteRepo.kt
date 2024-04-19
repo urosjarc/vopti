@@ -1,10 +1,15 @@
 package com.urosjarc.vopti.app.repos.sqlite
 
+import com.urosjarc.vopti.core.algos.cws.CWSProblem
 import com.urosjarc.vopti.core.domain.Id
-import com.urosjarc.vopti.core.domain.CWSProblem
-import com.urosjarc.vopti.core.repos.ProblemRepo
+import com.urosjarc.vopti.core.repos.CWSProblemRepo
 
-class ProblemSqliteRepo : ProblemRepo {
+class CWSProblemSqliteRepo : CWSProblemRepo {
+    init {
+        sqlite.autocommit {
+            it.table.create<CWSProblem>(throws = false)
+        }
+    }
     override fun getAll(): List<CWSProblem> {
         var problems = listOf<CWSProblem>()
         sqlite.autocommit {
@@ -21,15 +26,15 @@ class ProblemSqliteRepo : ProblemRepo {
         return problem!!
     }
 
-    override fun save(problem: CWSProblem) {
+    override fun save(data: CWSProblem) {
         sqlite.autocommit {
-            it.row.insert(row = problem)
+            it.row.insert(row = data)
         }
     }
 
-    override fun update(problem: CWSProblem) {
+    override fun update(data: CWSProblem) {
         sqlite.autocommit {
-            it.row.update(row = problem)
+            it.row.update(row = data)
         }
     }
 }

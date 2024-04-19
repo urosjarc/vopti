@@ -2,14 +2,14 @@
 
 <?import javafx.scene.control.*?>
 
-<TableView fx:id="problemsTV" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.parts.ProblemsTableView">
+<TableView fx:id="self" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.parts.CWSProblemsTableView">
     <columns>
-        <TableColumn editable="false" prefWidth="75.0" text="Map">
+        <TableColumn fx:id="mapTC" editable="false" prefWidth="75.0" text="Map">
             <columns>
                 <TableColumn fx:id="mapHeightTC" minWidth="60.0" prefWidth="60.0" text="Height" />
             </columns>
         </TableColumn>
-        <TableColumn editable="false" prefWidth="100.0" text="Clients">
+        <TableColumn fx:id="clientsTC" editable="false" prefWidth="100.0" text="Clients">
             <columns>
                 <TableColumn fx:id="customersSeedTC" minWidth="50.0" prefWidth="50.0" text="Seed" />
                 <TableColumn fx:id="customersDistributionTC" minWidth="100.0" prefWidth="100.0" text="Distribution" />
@@ -17,13 +17,13 @@
                 <TableColumn fx:id="customersSizeTC" minWidth="50.0" prefWidth="50.0" text="Size" />
             </columns>
         </TableColumn>
-        <TableColumn editable="false" prefWidth="75.0" text="Depots">
+        <TableColumn fx:id="depotsTC" editable="false" prefWidth="75.0" text="Depots">
             <columns>
                 <TableColumn fx:id="depotsSizeTC" prefWidth="75.0" text="Size" />
-            <TableColumn fx:id="depotsSeedTC" minWidth="75.0" prefWidth="75.0" text="Seed" />
+                <TableColumn fx:id="depotsSeedTC" minWidth="75.0" prefWidth="75.0" text="Seed" />
             </columns>
         </TableColumn>
-        <TableColumn editable="false" prefWidth="210.0" text="Vehicles">
+        <TableColumn fx:id="vehicleTC" editable="false" prefWidth="210.0" text="Vehicles">
             <columns>
                 <TableColumn fx:id="vehiclesMaxDistanceTC" minWidth="75.0" prefWidth="75.0" text="Range" />
             </columns>

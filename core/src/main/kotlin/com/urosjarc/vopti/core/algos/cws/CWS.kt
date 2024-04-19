@@ -1,4 +1,4 @@
-package com.urosjarc.vopti.core.algos
+package com.urosjarc.vopti.core.algos.cws
 
 import com.urosjarc.vopti.core.domain.Id
 import com.urosjarc.vopti.core.domain.Location
