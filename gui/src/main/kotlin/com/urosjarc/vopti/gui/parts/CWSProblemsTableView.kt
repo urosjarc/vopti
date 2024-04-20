@@ -1,8 +1,7 @@
 package com.urosjarc.vopti.gui.parts
 
+import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.core.algos.cws.CWSProblem
-import com.urosjarc.vopti.core.repos.CWSProblemRepo
-import com.urosjarc.vopti.gui.Events
 import com.urosjarc.vopti.gui.utils.UI
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -20,6 +19,9 @@ open class CWSProblemsTableViewUi : KoinComponent {
 
     @FXML
     lateinit var mapHeightTC: TableColumn<CWSProblem, String>
+
+    @FXML
+    lateinit var mapResolutionTC: TableColumn<CWSProblem, Int>
 
     @FXML
     lateinit var customersSizeTC: TableColumn<CWSProblem, Int>
@@ -57,14 +59,18 @@ open class CWSProblemsTableViewUi : KoinComponent {
 
 class CWSProblemsTableView : CWSProblemsTableViewUi() {
     val log = this.logger()
-    val problemRepo: CWSProblemRepo by this.inject()
+    val cwsProblemCache: CWSProblemCache by this.inject()
 
     @FXML
     fun initialize() {
         this.log.info(this.javaClass)
 
+        // Self
+        this.self.setOnMouseClicked { this.selectCWSProblem() }
+
         // Map
         this.mapHeightTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.mapHeight) }
+        this.mapResolutionTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.mapResolution) }
 
         // Customers
         this.customersSeedTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.customersSeed) }
@@ -72,11 +78,11 @@ class CWSProblemsTableView : CWSProblemsTableViewUi() {
         this.customersGroupingTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.customersGrouping) }
         this.customersDistributionTC.setCellValueFactory { ReadOnlyStringWrapper(it.value.customersDistribution) }
 
-        //Depots
+        // Depots
         this.depotsSizeTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.depotsSize) }
         this.depotsSeedTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.depotsSeed) }
 
-        //Vehicles
+        // Vehicles
         this.vehiclesMaxDistanceTC.setCellValueFactory { ReadOnlyObjectWrapper(it.value.vehicleRange) }
 
         // Columns auto size
@@ -86,9 +92,15 @@ class CWSProblemsTableView : CWSProblemsTableViewUi() {
         UI.setColumnWidth(clientsTC, 100 / 4)
         UI.setColumnWidth(mapTC, 100 / 4)
 
-        Events.cwsProblemSaved.listen {
-            this.self.items.setAll(this.problemRepo.getAll())
+        // Events
+
+        this.cwsProblemCache.onData {
+            this.self.items.setAll(it)
         }
     }
 
+    private fun selectCWSProblem() {
+        val cwsProblems = this.self.selectionModel.selectedItems ?: return
+        this.cwsProblemCache.select(cwsProblems)
+    }
 }

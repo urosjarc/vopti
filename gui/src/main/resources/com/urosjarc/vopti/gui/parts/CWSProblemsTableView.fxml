@@ -6,21 +6,22 @@
     <columns>
         <TableColumn fx:id="mapTC" editable="false" prefWidth="75.0" text="Map">
             <columns>
-                <TableColumn fx:id="mapHeightTC" minWidth="60.0" prefWidth="60.0" text="Height" />
+                <TableColumn fx:id="mapHeightTC" minWidth="100.0" prefWidth="100.0" text="Height fun." />
+            <TableColumn fx:id="mapResolutionTC" minWidth="100.0" prefWidth="100.0" text="Resolution" />
+            </columns>
+        </TableColumn>
+        <TableColumn fx:id="depotsTC" editable="false" prefWidth="75.0" text="Depots">
+            <columns>
+                <TableColumn fx:id="depotsSeedTC" minWidth="75.0" prefWidth="75.0" text="Seed" />
+                <TableColumn fx:id="depotsSizeTC" prefWidth="75.0" text="Size" />
             </columns>
         </TableColumn>
         <TableColumn fx:id="clientsTC" editable="false" prefWidth="100.0" text="Clients">
             <columns>
                 <TableColumn fx:id="customersSeedTC" minWidth="50.0" prefWidth="50.0" text="Seed" />
+                <TableColumn fx:id="customersSizeTC" minWidth="50.0" prefWidth="50.0" text="Size" />
                 <TableColumn fx:id="customersDistributionTC" minWidth="100.0" prefWidth="100.0" text="Distribution" />
                 <TableColumn fx:id="customersGroupingTC" minWidth="75.0" prefWidth="75.0" text="Grouping" />
-                <TableColumn fx:id="customersSizeTC" minWidth="50.0" prefWidth="50.0" text="Size" />
-            </columns>
-        </TableColumn>
-        <TableColumn fx:id="depotsTC" editable="false" prefWidth="75.0" text="Depots">
-            <columns>
-                <TableColumn fx:id="depotsSizeTC" prefWidth="75.0" text="Size" />
-                <TableColumn fx:id="depotsSeedTC" minWidth="75.0" prefWidth="75.0" text="Seed" />
             </columns>
         </TableColumn>
         <TableColumn fx:id="vehicleTC" editable="false" prefWidth="210.0" text="Vehicles">

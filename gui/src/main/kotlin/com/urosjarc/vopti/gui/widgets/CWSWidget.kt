@@ -4,8 +4,8 @@ import com.urosjarc.vopti.app.algos.EuclidianCWS
 import com.urosjarc.vopti.core.algos.cws.CWS
 import com.urosjarc.vopti.core.algos.cws.CWSProblemData
 import com.urosjarc.vopti.core.domain.Vector
-import com.urosjarc.vopti.core.repos.CWSProblemRepo
 import com.urosjarc.vopti.gui.Events
+import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.gui.parts.CWSProblemsTableView
 import com.urosjarc.vopti.gui.utils.Job
 import com.urosjarc.vopti.gui.utils.Painter
@@ -28,9 +28,6 @@ abstract class CWSWidgetUI : KoinComponent {
     lateinit var CWSProblem_Controller: CWSProblemWidget
 
     @FXML
-    lateinit var CWSProblemsTV_Controller: CWSProblemsTableView
-
-    @FXML
     lateinit var nextB: Button
 
     @FXML
@@ -40,7 +37,16 @@ abstract class CWSWidgetUI : KoinComponent {
     lateinit var solveB: Button
 
     @FXML
+    lateinit var CWSProblemsTV_Controller: CWSProblemsTableView
+
+    @FXML
     lateinit var saveB: Button
+
+    @FXML
+    lateinit var deleteB: Button
+
+    @FXML
+    lateinit var updateB: Button
 
 }
 
@@ -49,27 +55,30 @@ class CWSWidget : CWSWidgetUI() {
 
     private var cws: CWS? = null
     private var cwsProblemData: CWSProblemData? = null
+    private val cwsProblemCache: CWSProblemCache by this.inject()
+
     private val painter = Painter()
     private var job: Thread? = null
-    private val cwsProblemRepo: CWSProblemRepo by this.inject()
 
     @FXML
     fun initialize() {
+        this.log.info(this)
+
         this.painter.init(pane = this.painterP)
 
-        Events.cwsProblemCreated.listen {
+        this.nextB.setOnAction { this.next() }
+        this.playB.setOnAction { this.play() }
+        this.solveB.setOnAction { this.solve() }
+
+        this.saveB.setOnAction { this.save() }
+        this.updateB.setOnAction { this.update() }
+        this.deleteB.setOnAction { this.delete() }
+
+        this.cwsProblemCache.onChose {
             this.cws = null
             this.cwsProblemData = CWSProblemData(problem = it)
             this.redraw()
         }
-        this.log.info(this)
-        this.nextB.setOnAction { this.next() }
-        this.solveB.setOnAction { this.solve() }
-        this.playB.setOnAction { this.play() }
-        this.saveB.setOnAction { this.save() }
-
-
-        this.CWSProblem_Controller.create()
     }
 
     private fun initCWS() {
@@ -141,7 +150,21 @@ class CWSWidget : CWSWidgetUI() {
     private fun save() {
         this.cwsProblemData?.let {
             this.cwsProblemRepo.save(data = it.problem)
-            Events.cwsProblemSaved.trigger(it.problem)
+            Events.cwsProblemsUpdated.trigger()
+        }
+    }
+
+    fun update() {
+        this.cwsProblemData?.let {
+            Events.cwsProblemUpdated.trigger(it.problem)
+            Events.cwsProblemsUpdated.trigger()
+        }
+    }
+
+    fun delete() {
+        this.cwsProblemData?.let {
+            this.cwsProblemRepo.delete(data = it.problem)
+            Events.cwsProblemsUpdated.trigger()
         }
     }
 }

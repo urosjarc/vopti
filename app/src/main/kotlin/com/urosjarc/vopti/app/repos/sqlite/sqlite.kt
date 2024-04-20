@@ -7,8 +7,8 @@ import com.urosjarc.dbmessiah.impl.sqlite.SqliteService
 import com.urosjarc.dbmessiah.serializers.BasicTS
 import com.urosjarc.dbmessiah.serializers.IdTS
 import com.urosjarc.dbmessiah.serializers.JavaTimeTS
-import com.urosjarc.vopti.core.domain.Id
 import com.urosjarc.vopti.core.algos.cws.CWSProblem
+import com.urosjarc.vopti.core.domain.Id
 import java.util.*
 import kotlin.reflect.KProperty1
 
@@ -17,19 +17,22 @@ private fun <T : Any> createTable(primaryKey: KProperty1<T, *>): Table<T> {
     return Table(
         primaryKey = primaryKey,
         foreignKeys = foreignKeys,
-        constraints = foreignKeys.map { it.first to listOf(C.CASCADE_DELETE) })
+        constraints = foreignKeys.map { it.first to listOf(C.CASCADE_DELETE) },
+    )
 }
 
-private val sqlite_serializer = SqliteSerializer(
-    tables = listOf(
-        createTable(CWSProblem::id)
-    ),
-    globalSerializers = BasicTS.basic + JavaTimeTS.sqlite + IdTS.uuid.sqlite { Id<Any>(it) }
-)
+private val sqlite_serializer =
+    SqliteSerializer(
+        tables = listOf(
+            createTable(CWSProblem::id),
+        ),
+        globalSerializers = BasicTS.basic + JavaTimeTS.sqlite + IdTS.uuid.sqlite { Id<Any>(it) },
+    )
 
-val sqlite = SqliteService(
-    config = Properties().apply {
-        this["jdbcUrl"] = "jdbc:sqlite:./database.sqlite"
-    },
-    ser = sqlite_serializer
-)
+val sqlite =
+    SqliteService(
+        config = Properties().apply {
+            this["jdbcUrl"] = "jdbc:sqlite:./database.sqlite"
+        },
+        ser = sqlite_serializer,
+    )

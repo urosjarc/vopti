@@ -6,13 +6,14 @@ import com.urosjarc.vopti.core.repos.CWSProblemRepo
 
 class CWSProblemSqliteRepo : CWSProblemRepo {
     init {
-        sqlite.autocommit {
+        sqlite.transaction {
             it.table.create<CWSProblem>(throws = false)
         }
     }
-    override fun getAll(): List<CWSProblem> {
+
+    override fun get(): List<CWSProblem> {
         var problems = listOf<CWSProblem>()
-        sqlite.autocommit {
+        sqlite.transaction {
             problems = it.table.select<CWSProblem>()
         }
         return problems
@@ -20,21 +21,40 @@ class CWSProblemSqliteRepo : CWSProblemRepo {
 
     override fun get(id: Id<CWSProblem>): CWSProblem {
         var problem: CWSProblem? = null
-        sqlite.autocommit {
+        sqlite.transaction {
             problem = it.row.select(pk = id)
         }
         return problem!!
     }
 
     override fun save(data: CWSProblem) {
-        sqlite.autocommit {
+        sqlite.transaction {
             it.row.insert(row = data)
         }
     }
 
+    override fun save(data: Iterable<CWSProblem>) {
+        sqlite.transaction {
+            it.table.delete<CWSProblem>()
+            it.batch.insert(data)
+        }
+    }
+
     override fun update(data: CWSProblem) {
-        sqlite.autocommit {
+        sqlite.transaction {
             it.row.update(row = data)
+        }
+    }
+
+    override fun delete(data: CWSProblem) {
+        sqlite.transaction {
+            it.row.delete(row = data)
+        }
+    }
+
+    override fun delete() {
+        sqlite.transaction {
+            it.table.delete<CWSProblem>()
         }
     }
 }

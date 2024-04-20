@@ -2,26 +2,23 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<SplitPane dividerPositions="0.41986062717770034" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1030.0"
-           prefWidth="1350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.urosjarc.vopti.gui.widgets.CWSWidget">
-    <Pane fx:id="painterP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"/>
-    <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab text="Config">
-                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                    <fx:include fx:id="CWSProblem_" source="CWSProblemWidget.fxml"/>
-                    <HBox fillHeight="false" maxWidth="1.7976931348623157E308">
-                        <Button fx:id="nextB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Next" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="saveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" HBox.hgrow="ALWAYS"/>
-                    </HBox>
-                </VBox>
-            </Tab>
-            <Tab text="Tests">
-                <fx:include fx:id="CWSProblemsTV_" source="../parts/CWSProblemsTableView.fxml"/>
-            </Tab>
-        </tabs>
-    </TabPane>
+
+<SplitPane dividerPositions="0.41986062717770034" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1030.0" prefWidth="1350.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.urosjarc.vopti.gui.widgets.CWSWidget">
+    <Pane fx:id="painterP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+       <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+           <fx:include fx:id="CWSProblem_" source="CWSProblemWidget.fxml" />
+           <HBox fillHeight="false" maxWidth="1.7976931348623157E308">
+               <Button fx:id="nextB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Next" HBox.hgrow="ALWAYS" />
+               <Button fx:id="playB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Play" HBox.hgrow="ALWAYS" />
+               <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
+           </HBox>
+          <fx:include fx:id="CWSProblemsTV_" source="../parts/CWSProblemsTableView.fxml" VBox.vgrow="ALWAYS" />
+      <HBox maxWidth="1.7976931348623157E308">
+         <children>
+                  <Button fx:id="saveB" mnemonicParsing="false" text="Save" />
+            <Button fx:id="updateB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Update" HBox.hgrow="ALWAYS" />
+            <Button fx:id="deleteB" mnemonicParsing="false" text="Delete" />
+         </children>
+      </HBox>
+       </VBox>
 </SplitPane>
