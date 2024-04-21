@@ -1,7 +1,7 @@
 package com.urosjarc.vopti.gui.parts
 
-import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.core.algos.cws.CWSProblem
+import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.gui.utils.UI
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -63,7 +63,7 @@ class CWSProblemsTableView : CWSProblemsTableViewUi() {
 
     @FXML
     fun initialize() {
-        this.log.info(this.javaClass)
+        this.log.info("initialize")
 
         // Self
         this.self.setOnMouseClicked { this.selectCWSProblem() }
@@ -93,7 +93,6 @@ class CWSProblemsTableView : CWSProblemsTableViewUi() {
         UI.setColumnWidth(mapTC, 100 / 4)
 
         // Events
-
         this.cwsProblemCache.onData {
             this.self.items.setAll(it)
         }
@@ -101,6 +100,8 @@ class CWSProblemsTableView : CWSProblemsTableViewUi() {
 
     private fun selectCWSProblem() {
         val cwsProblems = this.self.selectionModel.selectedItems ?: return
+        if (cwsProblems.isEmpty()) return
         this.cwsProblemCache.select(cwsProblems)
+        this.cwsProblemCache.chose(cwsProblems.first())
     }
 }

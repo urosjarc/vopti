@@ -1,9 +1,9 @@
 package com.urosjarc.vopti.gui.widgets
 
-import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.core.algos.cws.CWSProblem
 import com.urosjarc.vopti.core.domain.Id
 import com.urosjarc.vopti.core.domain.TestFunction
+import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import org.apache.logging.log4j.kotlin.logger
@@ -74,7 +74,7 @@ class CWSProblemWidget : CWSProblemWidgetUI() {
 
     @FXML
     fun initialize() {
-        this.log.info(this)
+        this.log.info("initialize")
 
         // Map
         this.mapHeightFunCB.items.setAll(TestFunction.all)
@@ -92,17 +92,15 @@ class CWSProblemWidget : CWSProblemWidgetUI() {
         listOf(this.mapHeightFunCB, this.customersDistributionCB).forEach { it.setOnAction { this.cwsProblemConfirmed() } }
 
         this.cwsProblemCache.onChose { cwsp ->
-            cwsp?.let {
-                this.mapHeightFunCB.value = TestFunction.all.first { it.name == cwsp.mapHeight }
-                this.mapResolutionS.value = cwsp.mapResolution.toDouble()
-                this.customersSeedS.value = cwsp.customersSeed.toDouble()
-                this.customersSizeS.valueFactory.value = cwsp.customersSize
-                this.customersDistributionCB.value = TestFunction.all.first { it.name == cwsp.customersDistribution }
-                this.customersGroupingS.value = cwsp.customersGrouping
-                this.depotsSizeS.value = cwsp.depotsSize.toDouble()
-                this.depotsSeedS.value = cwsp.depotsSeed.toDouble()
-                this.vehiclesRangeS.value = cwsp.vehicleRange
-            }
+            this.mapHeightFunCB.value = TestFunction.all.first { it.name == cwsp.mapHeight }
+            this.mapResolutionS.value = cwsp.mapResolution.toDouble()
+            this.customersSeedS.value = cwsp.customersSeed.toDouble()
+            this.customersSizeS.valueFactory.value = cwsp.customersSize
+            this.customersDistributionCB.value = TestFunction.all.first { it.name == cwsp.customersDistribution }
+            this.customersGroupingS.value = cwsp.customersGrouping
+            this.depotsSizeS.value = cwsp.depotsSize.toDouble()
+            this.depotsSeedS.value = cwsp.depotsSeed.toDouble()
+            this.vehiclesRangeS.value = cwsp.vehicleRange
         }
     }
 

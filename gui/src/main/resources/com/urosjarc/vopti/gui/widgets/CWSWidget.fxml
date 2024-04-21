@@ -13,12 +13,9 @@
                <Button fx:id="solveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Solve" HBox.hgrow="ALWAYS" />
            </HBox>
           <fx:include fx:id="CWSProblemsTV_" source="../parts/CWSProblemsTableView.fxml" VBox.vgrow="ALWAYS" />
-      <HBox maxWidth="1.7976931348623157E308">
-         <children>
-                  <Button fx:id="saveB" mnemonicParsing="false" text="Save" />
-            <Button fx:id="updateB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Update" HBox.hgrow="ALWAYS" />
-            <Button fx:id="deleteB" mnemonicParsing="false" text="Delete" />
-         </children>
-      </HBox>
+           <HBox maxWidth="1.7976931348623157E308">
+               <Button fx:id="saveB" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Save" HBox.hgrow="ALWAYS"/>
+               <Button fx:id="deleteB" mnemonicParsing="false" text="Delete"/>
+           </HBox>
        </VBox>
 </SplitPane>

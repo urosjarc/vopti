@@ -4,7 +4,6 @@ import com.urosjarc.vopti.app.algos.EuclidianCWS
 import com.urosjarc.vopti.core.algos.cws.CWS
 import com.urosjarc.vopti.core.algos.cws.CWSProblemData
 import com.urosjarc.vopti.core.domain.Vector
-import com.urosjarc.vopti.gui.Events
 import com.urosjarc.vopti.gui.caches.CWSProblemCache
 import com.urosjarc.vopti.gui.parts.CWSProblemsTableView
 import com.urosjarc.vopti.gui.utils.Job
@@ -45,9 +44,6 @@ abstract class CWSWidgetUI : KoinComponent {
     @FXML
     lateinit var deleteB: Button
 
-    @FXML
-    lateinit var updateB: Button
-
 }
 
 class CWSWidget : CWSWidgetUI() {
@@ -62,7 +58,7 @@ class CWSWidget : CWSWidgetUI() {
 
     @FXML
     fun initialize() {
-        this.log.info(this)
+        this.log.info("initialize")
 
         this.painter.init(pane = this.painterP)
 
@@ -71,7 +67,6 @@ class CWSWidget : CWSWidgetUI() {
         this.solveB.setOnAction { this.solve() }
 
         this.saveB.setOnAction { this.save() }
-        this.updateB.setOnAction { this.update() }
         this.deleteB.setOnAction { this.delete() }
 
         this.cwsProblemCache.onChose {
@@ -149,22 +144,19 @@ class CWSWidget : CWSWidgetUI() {
 
     private fun save() {
         this.cwsProblemData?.let {
-            this.cwsProblemRepo.save(data = it.problem)
-            Events.cwsProblemsUpdated.trigger()
+            this.cwsProblemCache.save(it.problem)
         }
     }
 
     fun update() {
         this.cwsProblemData?.let {
-            Events.cwsProblemUpdated.trigger(it.problem)
-            Events.cwsProblemsUpdated.trigger()
+            this.cwsProblemCache.save(it.problem)
         }
     }
 
     fun delete() {
         this.cwsProblemData?.let {
-            this.cwsProblemRepo.delete(data = it.problem)
-            Events.cwsProblemsUpdated.trigger()
+            this.cwsProblemCache.delete(it.problem)
         }
     }
 }

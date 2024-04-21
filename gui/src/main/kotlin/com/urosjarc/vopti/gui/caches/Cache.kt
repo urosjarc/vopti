@@ -1,9 +1,12 @@
 package com.urosjarc.vopti.gui.caches
 
 import javafx.application.Platform
+import org.apache.logging.log4j.kotlin.logger
 import org.koin.core.component.KoinComponent
 
 abstract class Cache<T : Any> : KoinComponent {
+    val log = this.logger()
+
     val data = mutableListOf<T>()
     var selected = mutableListOf<T>()
     var history = mutableListOf<T>()
@@ -56,6 +59,7 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     fun set(t: List<T>) {
+        this.log.info("set: $t")
         if (!t.contains(this.chosen)) this.chose(null)
         this.data.clear()
         this.data.addAll(t)
@@ -65,6 +69,7 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     open fun save(t: T): T {
+        this.log.info("save: $t")
         val old = this.data.firstOrNull { t == it }
         if (old == null) this.data.add(t) else return old
         this.onDataNotify()
@@ -73,11 +78,13 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     fun select(t: List<T>) {
+        this.log.info("select: $t")
         this.selected = t.toMutableList()
         this.onSelectNotify()
     }
 
     fun chose(t: T? = null) {
+        this.log.info("chose: $t")
         this.resetHistory(all = false)
         this.chosen?.let { this.history.add(it) }
         this.chosen = t
@@ -85,15 +92,18 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     fun find(t: T): T? {
+        this.log.info("find: $t")
         return this.data.firstOrNull { it == t }
     }
 
     fun reset() {
+        this.log.info("reset")
         this.set(listOf())
         this.onResetNotify()
     }
 
     open fun delete(t: T) {
+        this.log.info("delete: $t")
         this.resetHistory(all = false)
         this.history.removeAll { it == t }
         this.future.removeAll { it == t }
@@ -111,6 +121,7 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     private fun resetHistory(all: Boolean) {
+        this.log.info("resetHistory: $all")
         if (all) this.history.clear()
         else this.history += this.future
         this.future.clear()
@@ -119,6 +130,7 @@ abstract class Cache<T : Any> : KoinComponent {
     // data: [1,2,3,4,5,6]
     // history, chosen, future: [1,2,3], 4, [5,6]
     fun undo() {
+        this.log.info("undo")
         this.history.removeLastOrNull()?.let { newChosen ->
             this.chosen?.let { oldChosen -> this.future.add(0, oldChosen) }
             this.chosen = newChosen
@@ -127,6 +139,7 @@ abstract class Cache<T : Any> : KoinComponent {
     }
 
     fun redo() {
+        this.log.info("redo")
         this.future.removeFirstOrNull()?.let { newChosen ->
             this.chosen?.let { oldChosen -> this.history.add(oldChosen) }
             this.chosen = newChosen
@@ -134,6 +147,7 @@ abstract class Cache<T : Any> : KoinComponent {
         }
     }
 
+    abstract fun init()
     abstract fun load()
 
     abstract fun save()
