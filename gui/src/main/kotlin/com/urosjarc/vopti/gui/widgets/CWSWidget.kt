@@ -11,6 +11,7 @@ import com.urosjarc.vopti.gui.utils.Painter
 import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.scene.control.Button
+import javafx.scene.control.TextField
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 import org.apache.logging.log4j.kotlin.logger
@@ -36,10 +37,22 @@ abstract class CWSWidgetUI : KoinComponent {
     lateinit var solveB: Button
 
     @FXML
+    lateinit var resultsTF: TextField
+
+    @FXML
     lateinit var CWSProblemsTV_Controller: CWSProblemsTableView
 
     @FXML
+    lateinit var exportB: Button
+
+    @FXML
+    lateinit var importB: Button
+
+    @FXML
     lateinit var saveB: Button
+
+    @FXML
+    lateinit var testB: Button
 
     @FXML
     lateinit var deleteB: Button
@@ -66,13 +79,31 @@ class CWSWidget : CWSWidgetUI() {
         this.playB.setOnAction { this.play() }
         this.solveB.setOnAction { this.solve() }
 
+        this.importB.setOnAction { this.import() }
+        this.exportB.setOnAction { this.export() }
         this.saveB.setOnAction { this.save() }
+        this.testB.setOnAction { this.test() }
         this.deleteB.setOnAction { this.delete() }
 
         this.cwsProblemCache.onChose {
             this.cws = null
             this.cwsProblemData = CWSProblemData(problem = it)
             this.redraw()
+        }
+    }
+
+    private fun export() {
+        this.resultsTF.text = "EXPORTING: ${this.cwsProblemCache.data}"
+    }
+
+    private fun import() {
+        this.resultsTF.text = "IMPORTING"
+    }
+
+    private fun test() {
+        this.resultsTF.clear()
+        this.cwsProblemCache.data.forEach {
+            this.resultsTF.text += "$it\n"
         }
     }
 
@@ -127,6 +158,7 @@ class CWSWidget : CWSWidgetUI() {
     private fun solve() {
         this.cws ?: this.initCWS()
         this.cws?.solve()
+        this.resultsTF.text = "Displaying results for: ${this.cws.toString()}"
         this.redraw()
     }
 

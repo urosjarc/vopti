@@ -36,7 +36,7 @@ class CWSProblemSqliteRepo : CWSProblemRepo {
     override fun save(data: Iterable<CWSProblem>) {
         sqlite.transaction {
             it.table.delete<CWSProblem>()
-            it.batch.insert(data)
+            if (data.iterator().hasNext()) it.batch.insert(data)
         }
     }
 
