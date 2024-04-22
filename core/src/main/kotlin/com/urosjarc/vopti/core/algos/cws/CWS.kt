@@ -11,7 +11,7 @@ abstract class CWS(val depot: Location, val customers: List<Location>) {
     abstract fun calculateCost(loc0: Location, loc1: Location): Double
     abstract fun isRouteValid(route: List<Int>): Boolean
 
-    val locations = listOf(depot) + customers
+    val locations: List<Location> = listOf(depot) + customers
 
     /** Cost matrix */
     private val costs = Array(this.locations.size) { DoubleArray(this.locations.size) { 0.0 } }
@@ -29,7 +29,7 @@ abstract class CWS(val depot: Location, val customers: List<Location>) {
         this.savings.sortByDescending { it.third }
     }
 
-    fun solve() = this.savings.forEach { this.process(loc0 = it.first, loc1 = it.second) }
+    fun solve(): Unit = this.savings.forEach { this.process(loc0 = it.first, loc1 = it.second) }
     fun next(): Boolean {
         val saving = this.savings.removeFirstOrNull() ?: return false
         return this.process(loc0 = saving.first, loc1 = saving.second)

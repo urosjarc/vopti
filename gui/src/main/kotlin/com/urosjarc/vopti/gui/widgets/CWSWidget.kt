@@ -180,13 +180,7 @@ class CWSWidget : CWSWidgetUI() {
         }
     }
 
-    fun update() {
-        this.cwsProblemData?.let {
-            this.cwsProblemCache.save(it.problem)
-        }
-    }
-
-    fun delete() {
+    private fun delete() {
         this.cwsProblemData?.let {
             this.cwsProblemCache.delete(it.problem)
         }
